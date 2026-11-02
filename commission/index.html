@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>イラスト依頼の料金計算ツール｜コミッションの値段の決め方がわかる（無料）</title>
+<meta name="description" content="イラスト・Live2D・3Dモデルなどのコミッション料金を、作業時間と目標の時給から無料で計算。背景・商用利用・特急などの追加料金、販売サイトの手数料を引いた手取り、そのまま使える料金表の文面まで作れます。">
+<meta property="og:title" content="コミッション料金の計算ツール（無料）">
+<meta property="og:description" content="作業時間と目標の時給から、イラスト依頼の料金と手取り、料金表の文面を作れる無料ツール。">
+<meta property="og:type" content="website">
+<style>
+  :root {
+    --main: #7c3aed; --main-d: #5b21b6; --main-l: #f3e8ff; --main-ll: #faf5ff;
+    --ink: #1f1b2e; --muted: #6b6480; --line: #e5ddf5; --bg: #fbf9ff; --card: #fff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: "Hiragino Sans", "Yu Gothic UI", "Yu Gothic", "Meiryo", system-ui, sans-serif;
+    font-size: 16px; line-height: 1.8;
+  }
+  header { background: linear-gradient(135deg, var(--main) 0%, var(--main-d) 100%); color: #fff; padding: 36px 16px 30px; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+  header .wrap { padding: 0; }
+  header .tag { display: inline-block; background: rgba(255,255,255,.2); border-radius: 99px; padding: 2px 12px; font-size: 13px; }
+  header h1 { font-size: clamp(24px, 5.4vw, 34px); line-height: 1.35; margin: 10px 0 6px; }
+  header p { margin: 0; opacity: .95; }
+  main { padding: 24px 0 40px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px 20px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(124,58,237,.06); }
+  h2 { font-size: 21px; color: var(--main-d); margin: 0 0 12px; line-height: 1.4; }
+  h3 { font-size: 17px; margin: 20px 0 6px; }
+  .q { margin: 0 0 18px; }
+  .q > label, .q > .label { display: block; font-weight: 700; margin-bottom: 6px; }
+  .q small { display: block; color: var(--muted); font-size: 13px; margin-top: 4px; }
+  .row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  input[type=text], select { font: inherit; padding: 9px 12px; border: 1.5px solid var(--line); border-radius: 10px; background: #fff; color: var(--ink); width: 100%; max-width: 220px; }
+  input:focus, select:focus { outline: 2px solid var(--main); border-color: var(--main); }
+  .checks { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; }
+  .checks label { display: flex; align-items: center; gap: 8px; border: 1.5px solid var(--line); border-radius: 10px; padding: 8px 12px; cursor: pointer; background: #fff; font-size: 15px; }
+  .checks input { accent-color: var(--main); }
+  .checks label:has(input:checked) { border-color: var(--main); background: var(--main-ll); }
+  .checks .pct { margin-left: auto; color: var(--muted); font-size: 13px; white-space: nowrap; }
+  .big { font-size: 34px; font-weight: 900; color: var(--main-d); line-height: 1.2; font-variant-numeric: tabular-nums; }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; margin: 8px 0; }
+  th, td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; vertical-align: top; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .note { color: var(--muted); font-size: 13px; }
+  textarea { width: 100%; min-height: 220px; font: 14px/1.7 inherit; font-family: inherit; padding: 12px; border: 1.5px solid var(--line); border-radius: 10px; background: var(--main-ll); color: var(--ink); resize: vertical; }
+  .btn { display: inline-block; text-decoration: none; font-weight: 700; border-radius: 10px; padding: 10px 16px; border: 0; font: inherit; font-weight: 700; cursor: pointer; }
+  .btn.primary { background: var(--main); color: #fff; }
+  .btn.ghost { background: #fff; color: var(--main-d); border: 1.5px solid var(--main); }
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+  .cta { border: 2.5px solid var(--main); background: var(--main-ll); border-radius: 16px; padding: 18px 20px; margin: 18px 0 0; }
+  .cta h3 { margin-top: 0; color: var(--main-d); }
+  details { border-bottom: 1px solid var(--line); padding: 10px 0; }
+  summary { font-weight: 700; cursor: pointer; }
+  footer { color: var(--muted); font-size: 13px; padding: 20px 0 40px; }
+  .warn { background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 8px; padding: 8px 12px; margin-top: 10px; font-size: 14px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <span class="tag">無料・登録不要 ／ イラスト・Live2D・3Dの依頼向け</span>
+    <h1>コミッションの料金、<br>いくらにする？</h1>
+    <p>作業時間と目標の時給から、料金・追加料金・手数料を引いた手取りと、そのまま使える料金表の文面を作ります。</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="card" aria-labelledby="in-title">
+    <h2 id="in-title">基本の料金を決める</h2>
+
+    <div class="q">
+      <label for="kind">依頼の種類（料金表に表示する名前）</label>
+      <input id="kind" type="text" value="バストアップ" style="max-width:320px">
+      <small>例：アイコン／バストアップ／全身／Live2Dモデル など</small>
+    </div>
+
+    <div class="q">
+      <label for="hours">1件にかかる作業時間</label>
+      <div class="row"><input id="hours" type="text" inputmode="decimal" value="6"> 時間</div>
+      <small>ラフ・線画・塗り・修正・やりとりの時間も含めて見積もると、赤字になりにくいです</small>
+    </div>
+
+    <div class="q">
+      <label for="wage">目標の時給</label>
+      <div class="row"><input id="wage" type="text" inputmode="numeric" value="1500"> 円</div>
+      <small>迷ったら、お住まいの地域の最低賃金を下回らない金額から始めて、依頼が埋まるようなら上げていくのが一般的です</small>
+    </div>
+
+    <div class="q">
+      <label for="fee">販売サイトの手数料（直接取引なら0）</label>
+      <div class="row"><input id="fee" type="text" inputmode="decimal" value="0"> %</div>
+      <small>Skeb・ココナラ・SKIMAなどを使う場合は、各サイトの最新の手数料率を入れてください</small>
+    </div>
+
+    <div class="q">
+      <label for="round">料金の丸め方</label>
+      <select id="round">
+        <option value="100">100円単位</option>
+        <option value="500" selected>500円単位</option>
+        <option value="1000">1,000円単位</option>
+      </select>
+    </div>
+
+    <h3>追加料金（チェックしたものを料金表に載せます）</h3>
+    <div class="checks" id="addons">
+      <label><input type="checkbox" data-name="背景あり" data-pct="30" checked> 背景あり <span class="pct">＋<input type="text" inputmode="numeric" value="30" style="width:52px;padding:2px 6px"> %</span></label>
+      <label><input type="checkbox" data-name="キャラクター追加（1人ごと）" data-pct="80" checked> キャラ追加（1人ごと） <span class="pct">＋<input type="text" inputmode="numeric" value="80" style="width:52px;padding:2px 6px"> %</span></label>
+      <label><input type="checkbox" data-name="商用利用" data-pct="100" checked> 商用利用 <span class="pct">＋<input type="text" inputmode="numeric" value="100" style="width:52px;padding:2px 6px"> %</span></label>
+      <label><input type="checkbox" data-name="特急（通常の半分の納期）" data-pct="50"> 特急 <span class="pct">＋<input type="text" inputmode="numeric" value="50" style="width:52px;padding:2px 6px"> %</span></label>
+      <label><input type="checkbox" data-name="差分（1枚ごと）" data-pct="20"> 差分（1枚ごと） <span class="pct">＋<input type="text" inputmode="numeric" value="20" style="width:52px;padding:2px 6px"> %</span></label>
+      <label><input type="checkbox" data-name="非公開（実績として載せない）" data-pct="30"> 非公開 <span class="pct">＋<input type="text" inputmode="numeric" value="30" style="width:52px;padding:2px 6px"> %</span></label>
+    </div>
+    <p class="note">％は基本料金に対する上乗せです。数字は自由に変えられます。</p>
+  </section>
+
+  <section class="card" aria-live="polite" aria-labelledby="out-title">
+    <h2 id="out-title">計算結果</h2>
+    <div class="note">基本料金（<span id="o-kind">バストアップ</span>）</div>
+    <div class="big" id="o-price">－</div>
+    <table>
+      <tr><th>作業時間 × 時給（丸める前）</th><td class="num" id="o-raw">－</td></tr>
+      <tr><th>手数料を引いた手取り</th><td class="num" id="o-net">－</td></tr>
+      <tr><th>実際の時給（手取り ÷ 作業時間）</th><td class="num" id="o-real">－</td></tr>
+      <tr><th>月に何件で、手取り5万円？</th><td class="num" id="o-count">－</td></tr>
+    </table>
+    <div class="warn" id="o-warn" hidden></div>
+
+    <h3>追加料金</h3>
+    <table id="o-addons"></table>
+
+    <h3>料金表の文面（コピーしてプロフィールや募集ページに）</h3>
+    <textarea id="o-text" readonly></textarea>
+    <div class="btns"><button class="btn primary" id="copy" type="button">文面をコピー</button></div>
+
+    <div class="cta">
+      <h3>依頼が増えてきたら、管理もラクに</h3>
+      <p>受付・入金・締切がDMやメモ帳でバラバラだと、入金の確認漏れや納期の勘違いが起きがちです。依頼の一覧・締切の色分け・月別の売上を、Googleスプレッドシート1枚でまとめて管理できます。</p>
+      <div class="btns">
+        <a class="btn primary" href="https://shiero-k.booth.pm/items/9082776" target="_blank" rel="noopener">無料の依頼管理シートを使う</a>
+        <a class="btn ghost" href="https://shiero-k.booth.pm/items/9075870" target="_blank" rel="noopener">依頼フォーム・締切通知つきの完全版（980円）</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>コミッション料金の決め方</h2>
+    <h3>1. 「作業時間 × 時給」で下限を出す</h3>
+    <p>料金が安すぎて続かなくなるのを防ぐために、まずは<b>自分の作業時間に時給をかけた金額</b>を下限にします。ラフ確認や修正、依頼者とのやりとりにかかる時間も忘れずに入れましょう。</p>
+    <h3>2. 手数料を引いた「手取り」で考える</h3>
+    <p>販売サイトを通す場合は手数料が引かれます。料金そのものではなく、<b>手元に残る金額</b>で時給を確認すると、思ったより安かったという失敗を防げます。</p>
+    <h3>3. 追加料金は「基本料金の何％」で決めると楽</h3>
+    <p>背景・キャラクター追加・商用利用・特急などは、基本料金に対する割合で決めておくと、基本料金を見直したときに追加料金も一緒に調整できます。</p>
+    <h3>4. 依頼が埋まるようになったら少しずつ上げる</h3>
+    <p>募集してすぐ埋まる状態が続くなら、値上げのサインです。いきなり大きく上げるより、少しずつ上げて反応を見るのが安心です。</p>
+  </section>
+
+  <section class="card">
+    <h2>よくある質問</h2>
+    <details><summary>商用利用の追加料金はどのくらい？</summary><p>使い道（グッズ販売・広告・配信の収益化など）や規模によって大きく変わります。このツールでは基本料金の＋100％を初期値にしていますが、用途ごとに個別見積もりにする方も多いです。</p></details>
+    <details><summary>修正は何回まで無料にすべき？</summary><p>「ラフの段階で2回まで無料、線画以降は有料」のように、工程ごとに回数を決めておくとトラブルを防げます。料金表に書いておくのがおすすめです。</p></details>
+    <details><summary>前払いと後払い、どちらがいい？</summary><p>個人間の取引では、未払いを防ぐために前払い（または着手前に半額）にする方が多いです。入金を確認してから着手するルールにしておくと安心です。</p></details>
+    <details><summary>入力した金額はどこかに送られますか？</summary><p>送られません。計算はすべてお使いのブラウザの中で行っています。</p></details>
+  </section>
+
+  <footer>
+    <p>※ 計算結果は入力にもとづく目安です。料金は最終的にご自身で決めてください。</p>
+    <p>ほかのツール：<a href="../">副業の確定申告が必要か判定するツール</a> ／ 作成：shiero-k（<a href="https://shiero-k.booth.pm/" target="_blank" rel="noopener">BOOTH</a>）</p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  const $ = id => document.getElementById(id);
+  const toNum = s => {
+    const v = String(s || '').replace(/[,，\s円%％]/g, '').replace(/[０-９．]/g, c => c === '．' ? '.' : String.fromCharCode(c.charCodeAt(0) - 0xFEE0));
+    const n = Number(v);
+    return isFinite(n) && n > 0 ? n : 0;
+  };
+  const yen = n => Math.round(n).toLocaleString('ja-JP') + '円';
+
+  function update() {
+    const kind = $('kind').value.trim() || '基本';
+    const hours = toNum($('hours').value);
+    const wage = toNum($('wage').value);
+    const fee = Math.min(toNum($('fee').value), 99);
+    const unit = Number($('round').value);
+    const raw = hours * wage;
+    const price = raw > 0 ? Math.ceil(raw / unit) * unit : 0;
+    const net = price * (1 - fee / 100);
+    const real = hours > 0 ? net / hours : 0;
+
+    $('o-kind').textContent = kind;
+    $('o-price').textContent = price ? yen(price) : '－';
+    $('o-raw').textContent = raw ? yen(raw) : '－';
+    $('o-net').textContent = price ? yen(net) : '－';
+    $('o-real').textContent = price ? yen(real) : '－';
+    $('o-count').textContent = net > 0 ? Math.ceil(50000 / net) + '件' : '－';
+
+    const warn = $('o-warn');
+    if (price && fee > 0 && real < wage) {
+      warn.hidden = false;
+      warn.textContent = '手数料を引くと、実際の時給は目標（' + yen(wage) + '）を下回ります。目標どおりにしたいなら、基本料金は ' + yen(Math.ceil(raw / (1 - fee / 100) / unit) * unit) + ' が目安です。';
+    } else {
+      warn.hidden = true;
+    }
+
+    const rows = [];
+    const lines = ['【料金表】', '■ ' + kind + '：' + (price ? yen(price) : '〇円')];
+    document.querySelectorAll('#addons label').forEach(l => {
+      const cb = l.querySelector('input[type=checkbox]');
+      const pct = toNum(l.querySelector('input[type=text]').value);
+      const add = price ? Math.ceil(price * pct / 100 / unit) * unit : 0;
+      if (cb.checked) {
+        rows.push('<tr><th>' + cb.dataset.name + '（＋' + pct + '%）</th><td class="num">＋' + (price ? yen(add) : '－') + '</td></tr>');
+        lines.push('　・' + cb.dataset.name + '：＋' + (price ? yen(add) : '〇円'));
+      }
+    });
+    $('o-addons').innerHTML = rows.join('') || '<tr><td class="note">追加料金は選ばれていません</td></tr>';
+    lines.push('', '■ 修正：ラフの段階で2回まで無料（線画以降は内容により別途）', '■ お支払い：前払い（入金を確認してから着手します）', '■ 納期：ご入金から〇週間ほど', '', 'ご依頼・ご相談はお気軽にどうぞ！');
+    $('o-text').value = lines.join('\n');
+  }
+
+  $('copy').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText($('o-text').value); $('copy').textContent = 'コピーしました'; }
+    catch (e) { $('o-text').select(); document.execCommand('copy'); $('copy').textContent = 'コピーしました'; }
+    setTimeout(() => { $('copy').textContent = '文面をコピー'; }, 1500);
+  });
+  document.querySelectorAll('input, select').forEach(e => { e.addEventListener('input', update); e.addEventListener('change', update); });
+  update();
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "イラスト依頼の料金はどう決めればいいですか？",
+     "acceptedAnswer": {"@type": "Answer", "text": "まずは作業時間に目標の時給をかけた金額を下限にし、販売サイトの手数料を引いた手取りで時給を確認します。追加料金は基本料金に対する割合で決めると調整が楽です。"}},
+    {"@type": "Question", "name": "商用利用の追加料金はどのくらいですか？",
+     "acceptedAnswer": {"@type": "Answer", "text": "用途や規模によって大きく変わります。基本料金の＋100％を目安にしつつ、用途ごとに個別見積もりにする方も多いです。"}}
+  ]
+}
+</script>
+</body>
+</html>
