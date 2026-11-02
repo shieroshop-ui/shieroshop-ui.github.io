@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>副業の確定申告が必要か30秒で判定｜20万円ルール・住民税もわかる無料ツール</title>
+<meta name="description" content="会社員の副業で確定申告が必要かを、収入と経費を入れるだけで無料判定。20万円ルール、アルバイト収入、住民税の申告、増える税金の目安までわかります。登録不要・入力内容は送信されません。">
+<meta property="og:title" content="副業の確定申告が必要か30秒で判定（無料）">
+<meta property="og:description" content="20万円ルール・住民税の申告・税金の目安まで。会社員の副業向けの無料判定ツール。">
+<meta property="og:type" content="website">
+<style>
+  :root {
+    --main: #0f766e; --main-d: #115e59; --main-l: #ccfbf1; --main-ll: #f0fdfa;
+    --ink: #1c2a29; --muted: #5f6f6d; --line: #d5ece8; --bg: #f7fbfa; --card: #fff;
+    --warn: #b45309; --warn-l: #fffbeb; --ok: #047857; --ok-l: #ecfdf5;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: "Hiragino Sans", "Yu Gothic UI", "Yu Gothic", "Meiryo", system-ui, sans-serif;
+    font-size: 16px; line-height: 1.8;
+  }
+  header { background: linear-gradient(135deg, #14b8a6 0%, var(--main-d) 100%); color: #fff; padding: 36px 16px 30px; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+  header .wrap { padding: 0; }
+  header .tag { display: inline-block; background: rgba(255,255,255,.2); border-radius: 99px; padding: 2px 12px; font-size: 13px; }
+  header h1 { font-size: clamp(24px, 5.4vw, 34px); line-height: 1.35; margin: 10px 0 6px; }
+  header p { margin: 0; opacity: .95; }
+  main { padding: 24px 0 40px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px 20px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(15,118,110,.06); }
+  h2 { font-size: 21px; color: var(--main-d); margin: 0 0 12px; line-height: 1.4; }
+  h3 { font-size: 17px; margin: 20px 0 6px; }
+  .q { margin: 0 0 18px; }
+  .q > label, .q > .label { display: block; font-weight: 700; margin-bottom: 6px; }
+  .q small { display: block; color: var(--muted); font-size: 13px; margin-top: 4px; }
+  .choices { display: flex; flex-wrap: wrap; gap: 8px; }
+  .choices label { display: inline-flex; align-items: center; gap: 6px; border: 1.5px solid var(--line); border-radius: 10px; padding: 8px 12px; cursor: pointer; background: #fff; font-size: 15px; }
+  .choices input { accent-color: var(--main); }
+  .choices label:has(input:checked) { border-color: var(--main); background: var(--main-ll); }
+  .yen { display: flex; align-items: center; gap: 8px; }
+  .yen input, select { width: 100%; max-width: 260px; font: inherit; padding: 9px 12px; border: 1.5px solid var(--line); border-radius: 10px; background: #fff; color: var(--ink); }
+  .yen input:focus, select:focus { outline: 2px solid var(--main); border-color: var(--main); }
+  .hidden { display: none !important; }
+  .result { border-radius: 14px; padding: 16px 18px; margin: 12px 0; }
+  .result.need { background: var(--warn-l); border-left: 5px solid #f59e0b; }
+  .result.noneed { background: var(--ok-l); border-left: 5px solid #10b981; }
+  .result.maybe { background: #f1f5f9; border-left: 5px solid #64748b; }
+  .result b.big { display: block; font-size: 20px; margin-bottom: 4px; }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; margin: 8px 0; }
+  th, td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; vertical-align: top; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .note { color: var(--muted); font-size: 13px; }
+  .cta { border: 2.5px solid var(--main); background: var(--main-ll); border-radius: 16px; padding: 18px 20px; margin: 18px 0; }
+  .cta h3 { margin-top: 0; color: var(--main-d); }
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+  .btn { display: inline-block; text-decoration: none; font-weight: 700; border-radius: 10px; padding: 10px 16px; }
+  .btn.primary { background: var(--main); color: #fff; }
+  .btn.ghost { background: #fff; color: var(--main-d); border: 1.5px solid var(--main); }
+  details { border-bottom: 1px solid var(--line); padding: 10px 0; }
+  summary { font-weight: 700; cursor: pointer; }
+  footer { color: var(--muted); font-size: 13px; padding: 20px 0 40px; }
+  #promo { display: none; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <span class="tag">無料・登録不要 ／ 会社員の副業向け</span>
+    <h1>副業の確定申告、必要？<br>30秒で判定します</h1>
+    <p>収入と経費を入れるだけ。20万円ルール・住民税の申告・増える税金の目安までわかります。</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="card" aria-labelledby="form-title">
+    <h2 id="form-title">質問に答えてください</h2>
+
+    <div class="q">
+      <span class="label">Q1. 本業の働き方は？</span>
+      <div class="choices">
+        <label><input type="radio" name="work" value="employee" checked> 会社員・公務員（年末調整あり）</label>
+        <label><input type="radio" name="work" value="self"> 自営業・フリーランス</label>
+        <label><input type="radio" name="work" value="other"> その他（年金・学生など）</label>
+      </div>
+    </div>
+
+    <div class="q" data-show="employee">
+      <span class="label">Q2. 本業の給与収入は、年2,000万円を超えますか？</span>
+      <div class="choices">
+        <label><input type="radio" name="over20m" value="no" checked> いいえ</label>
+        <label><input type="radio" name="over20m" value="yes"> はい</label>
+      </div>
+    </div>
+
+    <div class="q" data-show="employee">
+      <span class="label">Q3. 副業の形は？</span>
+      <div class="choices">
+        <label><input type="radio" name="side" value="biz" checked> 業務委託・販売など（給与以外）</label>
+        <label><input type="radio" name="side" value="part"> アルバイト・パート（給与）</label>
+        <label><input type="radio" name="side" value="both"> 両方ある</label>
+      </div>
+    </div>
+
+    <div class="q" data-side="biz both">
+      <label for="income">副業の収入（1年分・給与以外）</label>
+      <div class="yen"><input id="income" type="text" inputmode="numeric" placeholder="例：480000"> 円</div>
+      <small>報酬から税金が引かれて振り込まれた場合は、引かれる前の金額</small>
+    </div>
+
+    <div class="q" data-side="biz both">
+      <label for="expense">副業の経費（1年分）</label>
+      <div class="yen"><input id="expense" type="text" inputmode="numeric" placeholder="例：215000"> 円</div>
+      <small>道具・ソフト・通信費（仕事で使う割合分）・販売手数料など</small>
+    </div>
+
+    <div class="q" data-side="part both">
+      <label for="part">アルバイト・パートの給与収入（1年分）</label>
+      <div class="yen"><input id="part" type="text" inputmode="numeric" placeholder="例：300000"> 円</div>
+    </div>
+
+    <div class="q" data-show="employee">
+      <span class="label">Q4. 医療費控除やふるさと納税（6自治体以上）などで、もともと確定申告する予定ですか？</span>
+      <div class="choices">
+        <label><input type="radio" name="planned" value="no" checked> いいえ</label>
+        <label><input type="radio" name="planned" value="yes"> はい</label>
+      </div>
+    </div>
+
+    <div class="q" data-side="biz both">
+      <label for="withheld">報酬から引かれた税金（源泉徴収税額）</label>
+      <div class="yen"><input id="withheld" type="text" inputmode="numeric" placeholder="なければ空欄"> 円</div>
+      <small>支払明細や支払調書に書いてあります</small>
+    </div>
+
+    <div class="q" data-side="biz both">
+      <label for="rate">あなたの所得税率（わからなければ10%のままでOK）</label>
+      <select id="rate">
+        <option value="5">5%（課税所得 195万円以下）</option>
+        <option value="10" selected>10%（195万超〜330万円以下）</option>
+        <option value="20">20%（330万超〜695万円以下）</option>
+        <option value="23">23%（695万超〜900万円以下）</option>
+        <option value="33">33%（900万超〜1,800万円以下）</option>
+        <option value="40">40%（1,800万超〜4,000万円以下）</option>
+        <option value="45">45%（4,000万円超）</option>
+      </select>
+      <small>年収400〜700万円くらいの会社員の多くは10%か20%です</small>
+    </div>
+  </section>
+
+  <section class="card" aria-live="polite" aria-labelledby="result-title">
+    <h2 id="result-title">判定結果</h2>
+    <div id="tax" class="result maybe"><b class="big">金額を入れると判定します</b></div>
+    <h3>住民税の申告</h3>
+    <div id="resident" class="result maybe">－</div>
+    <div id="money">
+      <h3>副業で増える税金の目安</h3>
+      <table>
+        <tr><th>副業の所得（収入−経費）</th><td class="num" id="m-income">－</td></tr>
+        <tr><th>判定に使う金額</th><td class="num" id="m-judge">－</td></tr>
+        <tr><th>所得税＋復興特別所得税</th><td class="num" id="m-itax">－</td></tr>
+        <tr><th>住民税（10%）</th><td class="num" id="m-rtax">－</td></tr>
+        <tr><th>源泉徴収分を引いた所得税の追加納付</th><td class="num" id="m-diff">－</td></tr>
+      </table>
+      <p class="note">※ 副業の所得に税率をかけたざっくりした目安です。各種控除やアルバイト給与分の税額は含みません。</p>
+    </div>
+
+    <div class="cta">
+      <h3>1年分の収入と経費、ちゃんと記録できていますか？</h3>
+      <p>申告の時期にまとめて集計するのは大変です。日々の記録はスプレッドシートにまかせて、年間の所得を自動で出しておくと安心です。</p>
+      <div class="btns">
+        <a class="btn primary" href="https://shiero-k.booth.pm/items/9088417" target="_blank" rel="noopener">無料の記録シートを使う</a>
+        <a class="btn ghost" href="https://shiero-k.booth.pm/items/9076169" target="_blank" rel="noopener">判定・申告メモつきの完全版（980円）</a>
+      </div>
+      <p class="note">どちらもGoogleスプレッドシート。記録した数字からこのページと同じ判定がシート上で出せるのは完全版です。</p>
+    </div>
+
+    <div id="promo" class="cta">
+      <!-- 会計ソフトの紹介枠（アフィリエイト登録後にリンクを入れて display を戻す） -->
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>副業の確定申告「20万円ルール」とは</h2>
+    <p>会社で年末調整を受けている会社員は、<b>給与以外の副業の所得（収入−経費）が年20万円以下</b>なら、所得税の確定申告をしなくてよいことになっています。ポイントは「収入」ではなく<b>「所得」</b>で判定すること。たとえば収入が50万円でも、経費が35万円なら所得は15万円なので、このルールでは申告不要です。</p>
+    <h3>アルバイト・パートの場合</h3>
+    <p>副業がアルバイト・パートなどの給与の場合は、経費を引く前の<b>給与収入</b>（＋給与以外の所得）が20万円を超えると確定申告が必要です。</p>
+    <h3>20万円以下でも「住民税の申告」は必要</h3>
+    <p>20万円ルールは所得税だけの話です。確定申告をしない場合でも、副業の所得があれば、お住まいの市区町村に<b>住民税の申告</b>をする必要があります。</p>
+    <h3>20万円以下でも確定申告が必要になるケース</h3>
+    <ul>
+      <li>医療費控除・ふるさと納税（6自治体以上）・住宅ローン控除の初年度などで、もともと確定申告をする場合（副業の所得も含めて申告します）</li>
+      <li>本業の給与収入が2,000万円を超える場合</li>
+      <li>自営業・フリーランスの方（20万円ルールは会社員向けの特例です）</li>
+    </ul>
+    <h3>あえて申告すると得をすることも</h3>
+    <p>報酬から源泉徴収で税金が引かれている場合、確定申告をすると引かれすぎた分が戻ってくることがあります。</p>
+  </section>
+
+  <section class="card">
+    <h2>よくある質問</h2>
+    <details><summary>副業がバレないように申告するには？</summary><p>確定申告書の第二表「住民税に関する事項」で、給与以外の所得の住民税を「自分で納付（普通徴収）」にします。住民税だけ申告する場合も、市区町村の申告書で同じように選びます。ただしアルバイト・パートの給与分は普通徴収にできないことが多いです。</p></details>
+    <details><summary>経費には何が入りますか？</summary><p>副業の収入を得るために使ったお金です。道具・ソフト、仕事で使う割合分のスマホ代やネット代、販売サイトの手数料、取材の交通費などが代表的です。10万円以上のパソコンなどは、何年かに分けて経費にする「減価償却」が必要なことがあります。</p></details>
+    <details><summary>雑所得と事業所得、どちらですか？</summary><p>規模が小さく帳簿をつけていない副業は「雑所得（業務）」になることが多いです。事業として営み帳簿を保存している場合は「事業所得」になります。迷ったら税務署に確認しましょう。</p></details>
+    <details><summary>いつまでに申告すればいいですか？</summary><p>所得税の確定申告は、原則として翌年の2月16日〜3月15日です（土日の場合は翌平日）。e-Taxならスマホからも申告できます。</p></details>
+    <details><summary>入力した金額はどこかに送られますか？</summary><p>送られません。計算はすべてお使いのブラウザの中で行っています。</p></details>
+  </section>
+
+  <footer>
+    <p>※ この判定は一般的なルールにもとづく参考情報です。個別の事情によって結果が変わることがあります。最終的な判断は国税庁のホームページ、税務署、税理士にご確認ください。</p>
+    <p>作成：shiero-k（<a href="https://shiero-k.booth.pm/" target="_blank" rel="noopener">BOOTH</a>）</p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  const $ = id => document.getElementById(id);
+  const radio = name => document.querySelector('input[name="' + name + '"]:checked').value;
+  const num = id => {
+    const v = ($(id).value || '').replace(/[,，\s円]/g, '').replace(/[０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0));
+    const n = Number(v);
+    return isFinite(n) && n > 0 ? Math.floor(n) : 0;
+  };
+  const yen = n => (n < 0 ? '▲' : '') + Math.abs(Math.round(n)).toLocaleString('ja-JP') + '円';
+  const set = (el, cls, html) => { el.className = 'result ' + cls; el.innerHTML = html; };
+
+  function update() {
+    const work = radio('work');
+    const side = radio('side');
+    const isEmp = work === 'employee';
+    document.querySelectorAll('[data-show]').forEach(e => e.classList.toggle('hidden', !isEmp));
+    document.querySelectorAll('[data-side]').forEach(e => {
+      const ok = isEmp ? e.dataset.side.split(' ').includes(side) : e.dataset.side.split(' ').includes('biz');
+      e.classList.toggle('hidden', !ok);
+    });
+
+    const useBiz = !isEmp || side !== 'part';
+    const usePart = isEmp && side !== 'biz';
+    const income = useBiz ? num('income') : 0;
+    const expense = useBiz ? num('expense') : 0;
+    const part = usePart ? num('part') : 0;
+    const withheld = useBiz ? num('withheld') : 0;
+    const rate = Number($('rate').value);
+    const bizIncome = income - expense;
+    const judge = Math.max(0, bizIncome) + part;
+    const entered = income + expense + part > 0;
+
+    const tax = $('tax'), res = $('resident');
+    let taxNeed = null;
+    if (work === 'self') {
+      set(tax, 'need', '<b class="big">▶ 確定申告が必要です</b>自営業・フリーランスの方は、所得があれば原則として確定申告が必要です（20万円ルールは会社員向けの特例です）。');
+      taxNeed = true;
+    } else if (work === 'other') {
+      set(tax, 'maybe', '<b class="big">▶ 状況によって変わります</b>年金を受け取っている方は「公的年金等の収入が400万円以下で、それ以外の所得が20万円以下」なら不要などのルールがあります。国税庁のページで確認してください。');
+    } else if (radio('over20m') === 'yes') {
+      set(tax, 'need', '<b class="big">▶ 確定申告が必要です</b>給与収入が2,000万円を超える方は、副業の有無にかかわらず確定申告が必要です。');
+      taxNeed = true;
+    } else if (!entered) {
+      set(tax, 'maybe', '<b class="big">金額を入れると判定します</b>');
+    } else if (judge > 200000) {
+      set(tax, 'need', '<b class="big">▶ 確定申告が必要です</b>判定に使う金額が20万円を超えています（' + yen(judge) + '）。');
+      taxNeed = true;
+    } else if (radio('planned') === 'yes') {
+      set(tax, 'need', '<b class="big">▶ 確定申告が必要です</b>もともと確定申告をする予定のため、20万円以下の副業の所得も含めて申告してください。');
+      taxNeed = true;
+    } else {
+      let extra = '';
+      if (withheld > 0) extra = '<br>💡 源泉徴収された税金が' + yen(withheld) + 'あります。あえて確定申告すると、一部が戻ってくる場合があります。';
+      set(tax, 'noneed', '<b class="big">▶ 所得税の確定申告は不要です</b>判定に使う金額が20万円以下です（' + yen(judge) + '）。ただし下の住民税の申告を忘れずに。' + extra);
+      taxNeed = false;
+    }
+
+    if (taxNeed === true) {
+      set(res, 'noneed', '確定申告をすれば、住民税の申告は不要です（税務署から市区町村へ情報が送られます）。');
+    } else if (taxNeed === false) {
+      if (bizIncome > 0 || part > 0) set(res, 'need', '<b>▶ 住民税の申告が必要です。</b>所得税の確定申告をしない場合でも、副業の所得はお住まいの市区町村に申告します（20万円以下でも必要）。');
+      else set(res, 'noneed', '副業の所得がないため、住民税の申告は原則不要です。');
+    } else {
+      set(res, 'maybe', '－');
+    }
+
+    $('money').classList.toggle('hidden', !useBiz);
+    const itax = Math.round(Math.max(0, bizIncome) * rate / 100 * 1.021);
+    const rtax = Math.round(Math.max(0, bizIncome) * 0.1);
+    $('m-income').textContent = entered ? yen(bizIncome) : '－';
+    $('m-judge').textContent = entered && isEmp ? yen(judge) : '－';
+    $('m-itax').textContent = entered ? yen(itax) : '－';
+    $('m-rtax').textContent = entered ? yen(rtax) : '－';
+    $('m-diff').textContent = entered ? (itax - withheld < 0 ? yen(itax - withheld) + '（戻る見込み）' : yen(itax - withheld)) : '－';
+  }
+
+  document.querySelectorAll('input, select').forEach(e => { e.addEventListener('input', update); e.addEventListener('change', update); });
+  update();
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "副業の確定申告は20万円以下なら不要ですか？",
+     "acceptedAnswer": {"@type": "Answer", "text": "年末調整を受けている会社員で、給与以外の副業の所得（収入−経費）が年20万円以下なら所得税の確定申告は不要です。ただし住民税の申告は必要です。"}},
+    {"@type": "Question", "name": "20万円は収入ですか、所得ですか？",
+     "acceptedAnswer": {"@type": "Answer", "text": "業務委託や販売などの副業は、収入から経費を引いた所得で判定します。アルバイト・パートの給与は給与収入で判定します。"}},
+    {"@type": "Question", "name": "副業が会社にバレないように申告するには？",
+     "acceptedAnswer": {"@type": "Answer", "text": "確定申告書の第二表で、給与以外の所得の住民税を自分で納付（普通徴収）にします。"}}
+  ]
+}
+</script>
+</body>
+</html>
