@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>副業の確定申告が必要か30秒で判定｜20万円ルール・住民税もわかる無料ツール</title>
-<meta name="description" content="会社員の副業で確定申告が必要かを、収入と経費を入れるだけで無料判定。20万円ルール、アルバイト収入、住民税の申告、増える税金の目安までわかります。登録不要・入力内容は送信されません。">
+<title>副業の確定申告が必要か30秒でセルフチェック｜20万円ルール・住民税の目安がわかる無料ツール</title>
+<meta name="description" content="会社員の副業で確定申告が必要かを、収入と経費を入れるだけで国税庁の基準に当てはめてセルフチェック。20万円ルール、アルバイト収入、住民税の申告、増える税金の目安までわかります。登録不要・入力内容は送信されません。">
 <meta property="og:title" content="副業の確定申告が必要か30秒で判定（無料）">
 <meta property="og:description" content="20万円ルール・住民税の申告・税金の目安まで。会社員の副業向けの無料判定ツール。">
 <meta property="og:type" content="website">
@@ -46,6 +46,7 @@
   .result.noneed { background: var(--ok-l); border-left: 5px solid #10b981; }
   .result.maybe { background: #f1f5f9; border-left: 5px solid #64748b; }
   .result b.big { display: block; font-size: 20px; margin-bottom: 4px; }
+  .result .src { display: block; margin-top: 8px; font-size: 13px; color: var(--muted); }
   table { width: 100%; border-collapse: collapse; font-size: 15px; margin: 8px 0; }
   th, td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; vertical-align: top; }
   td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -66,8 +67,8 @@
 <header>
   <div class="wrap">
     <span class="tag">無料・登録不要 ／ 会社員の副業向け</span>
-    <h1>副業の確定申告、必要？<br>30秒で判定します</h1>
-    <p>収入と経費を入れるだけ。20万円ルール・住民税の申告・増える税金の目安までわかります。</p>
+    <h1>副業の確定申告、必要？<br>30秒でセルフチェック</h1>
+    <p>収入と経費を入れるだけで、国税庁の基準に当てはめた目安がわかります。20万円ルール・住民税の申告・増える税金の目安まで。</p>
   </div>
 </header>
 
@@ -148,8 +149,8 @@
   </section>
 
   <section class="card" aria-live="polite" aria-labelledby="result-title">
-    <h2 id="result-title">判定結果</h2>
-    <div id="tax" class="result maybe"><b class="big">金額を入れると判定します</b></div>
+    <h2 id="result-title">チェック結果（目安）</h2>
+    <div id="tax" class="result maybe"><b class="big">金額を入れると目安を表示します</b></div>
     <h3>住民税の申告</h3>
     <div id="resident" class="result maybe">－</div>
     <div id="money">
@@ -206,13 +207,15 @@
   </section>
 
   <footer>
-    <p>※ この判定は一般的なルールにもとづく参考情報です。個別の事情によって結果が変わることがあります。最終的な判断は国税庁のホームページ、税務署、税理士にご確認ください。</p>
+    <p>※ このツールは、国税庁が公表している一般的な基準（<a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1900.htm" target="_blank" rel="noopener">No.1900 給与所得者で確定申告が必要な人</a>など）に入力された金額を当てはめた目安を表示するもので、個別の税務相談や税額の確定を行うものではありません。2か所以上から給与を受けている場合など、ここで扱っていない基準に当てはまることもあります。最終的な判断は国税庁のホームページ、税務署、税理士にご確認ください。</p>
+    <p>※ 作者は税理士ではないため、個別のご相談にはお答えできません。</p>
     <p>ほかのツール：<a href="commission/">イラスト依頼（コミッション）の料金計算ツール</a> ／ 作成：shiero-k（<a href="https://shiero-k.booth.pm/" target="_blank" rel="noopener">BOOTH</a>）</p>
   </footer>
 </main>
 
 <script>
 (function () {
+  const NTA_1900 = 'https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1900.htm';
   const $ = id => document.getElementById(id);
   const radio = name => document.querySelector('input[name="' + name + '"]:checked').value;
   const num = id => {
@@ -246,33 +249,34 @@
 
     const tax = $('tax'), res = $('resident');
     let taxNeed = null;
+    const src = '<span class="src">一般的な基準に当てはめた目安です。最終的な判断は国税庁 <a href="' + NTA_1900 + '" target="_blank" rel="noopener">No.1900 給与所得者で確定申告が必要な人</a>や税務署でご確認ください。</span>';
     if (work === 'self') {
-      set(tax, 'need', '<b class="big">▶ 確定申告が必要です</b>自営業・フリーランスの方は、所得があれば原則として確定申告が必要です（20万円ルールは会社員向けの特例です）。');
+      set(tax, 'need', '<b class="big">▶ 確定申告が必要な人に当たる可能性が高いです（目安）</b>自営業・フリーランスの方は、所得があれば原則として確定申告が必要とされています（20万円ルールは会社員向けの基準です）。' + src);
       taxNeed = true;
     } else if (work === 'other') {
-      set(tax, 'maybe', '<b class="big">▶ 状況によって変わります</b>年金を受け取っている方は「公的年金等の収入が400万円以下で、それ以外の所得が20万円以下」なら不要などのルールがあります。国税庁のページで確認してください。');
+      set(tax, 'maybe', '<b class="big">▶ 状況によって変わります</b>年金を受け取っている方は「公的年金等の収入が400万円以下で、それ以外の所得が20万円以下」なら不要などの基準があります。国税庁のページで確認してください。');
     } else if (radio('over20m') === 'yes') {
-      set(tax, 'need', '<b class="big">▶ 確定申告が必要です</b>給与収入が2,000万円を超える方は、副業の有無にかかわらず確定申告が必要です。');
+      set(tax, 'need', '<b class="big">▶ 確定申告が必要な人に当たります（目安）</b>国税庁の基準では、給与収入が2,000万円を超える方は、副業の有無にかかわらず確定申告が必要とされています。' + src);
       taxNeed = true;
     } else if (!entered) {
-      set(tax, 'maybe', '<b class="big">金額を入れると判定します</b>');
+      set(tax, 'maybe', '<b class="big">金額を入れると目安を表示します</b>');
     } else if (judge > 200000) {
-      set(tax, 'need', '<b class="big">▶ 確定申告が必要です</b>判定に使う金額が20万円を超えています（' + yen(judge) + '）。');
+      set(tax, 'need', '<b class="big">▶ 確定申告が必要な人に当たります（目安）</b>入力した金額では、20万円ルールの基準（20万円）を超えています（' + yen(judge) + '）。' + src);
       taxNeed = true;
     } else if (radio('planned') === 'yes') {
-      set(tax, 'need', '<b class="big">▶ 確定申告が必要です</b>もともと確定申告をする予定のため、20万円以下の副業の所得も含めて申告してください。');
+      set(tax, 'need', '<b class="big">▶ 副業の所得も含めて申告する形になります（目安）</b>医療費控除などで確定申告をする場合は、20万円以下の副業の所得も含めて申告するとされています。' + src);
       taxNeed = true;
     } else {
       let extra = '';
-      if (withheld > 0) extra = '<br>💡 源泉徴収された税金が' + yen(withheld) + 'あります。あえて確定申告すると、一部が戻ってくる場合があります。';
-      set(tax, 'noneed', '<b class="big">▶ 所得税の確定申告は不要です</b>判定に使う金額が20万円以下です（' + yen(judge) + '）。ただし下の住民税の申告を忘れずに。' + extra);
+      if (withheld > 0) extra = '<br>💡 源泉徴収された税金が' + yen(withheld) + 'あります。確定申告をすると、一部が戻ってくる場合があります。';
+      set(tax, 'noneed', '<b class="big">▶ 所得税の確定申告は不要な人に当たります（目安）</b>入力した金額では、20万円ルールの基準（20万円）以下です（' + yen(judge) + '）。ただし下の住民税の申告を忘れずに。' + extra + src);
       taxNeed = false;
     }
 
     if (taxNeed === true) {
-      set(res, 'noneed', '確定申告をすれば、住民税の申告は不要です（税務署から市区町村へ情報が送られます）。');
+      set(res, 'noneed', '確定申告をすれば、住民税の申告は原則不要です（税務署から市区町村へ情報が送られます）。');
     } else if (taxNeed === false) {
-      if (bizIncome > 0 || part > 0) set(res, 'need', '<b>▶ 住民税の申告が必要です。</b>所得税の確定申告をしない場合でも、副業の所得はお住まいの市区町村に申告します（20万円以下でも必要）。');
+      if (bizIncome > 0 || part > 0) set(res, 'need', '<b>▶ 住民税の申告が必要な人に当たります（目安）。</b>所得税の確定申告をしない場合でも、副業の所得はお住まいの市区町村に申告するとされています（20万円以下でも必要）。詳しくはお住まいの市区町村にご確認ください。');
       else set(res, 'noneed', '副業の所得がないため、住民税の申告は原則不要です。');
     } else {
       set(res, 'maybe', '－');
